@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  postgres-db:
+    image: postgres:15-alpine
+    container_name: ac_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: affiliatedb
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./.docker/data/postgres:/var/lib/postgresql/data
+
+  mongo-db:
+    image: mongo:latest
+    container_name: ac_mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password123
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./.docker/data/mongo:/data/db
+
+  adminer:
+    image: adminer
+    container_name: ac_adminer
+    restart: always
+    ports:
+      - "8080:8080"
+
+volumes:
+  postgres-data:
+  mongo-data:
